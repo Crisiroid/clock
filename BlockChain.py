@@ -1,6 +1,7 @@
 from hashlib import sha256
 
 def u_hash(*args):
+    #hash generator
     h_text = ""; g_hash = sha256()
     for arg in args:
         h_text += str(arg)
@@ -9,6 +10,7 @@ def u_hash(*args):
     return g_hash.hexdigest()
 
 class Block():
+    #Main block
     m_data = None
     c_hash = None
     a_nonce = 0
@@ -21,8 +23,17 @@ class Block():
 
     def hash(self):
         return u_hash(self.p_hash, self.block_n, self.m_data, self.a_nonce)
+
+    def __str__(self):
+        return str("Block num: %s\nHash: %s\nPrevious: %s\nData: %s\nNonce: %s\n" %(self.block_n, self.hash(), self.p_hash, self.m_data, self.a_nonce))
 class BlockChain():
-    pass
+    #creating block chain network
+    hardiness = 4
+    def __init__(self, chain = []):
+        self.chain = chain
+
+    def put_a(self, Block):
+        self.chain.append({'hash': Block.hash(), 'Previous': Block.p_hash, 'Number': Block.block_n, 'Data': Block.m_data, 'nonce': Block.a_nonce})
 
 
 
@@ -30,6 +41,7 @@ class BlockChain():
 
 def main():
     block = Block("Hello", 1)
+    print(block)
 
 
 if __name__ == '__main__':
